@@ -4,14 +4,11 @@ public class Loader implements Runnable{
     private String name;
     private int nBox;
     private int capacity;
-    private Warehouse warehouse;
+    private Warehouse[] warehouse;
     private int done = 0;
-    private static String winner = null;
-    private final static Object lock = new Object();
 
 
-
-    public Loader(String name, int nBox, int capacity, Warehouse warehouse) {
+    public Loader(String name, int nBox, int capacity, Warehouse[] warehouse) {
         this.name = name;
         this.nBox = nBox;
         this.capacity = capacity;
@@ -19,21 +16,21 @@ public class Loader implements Runnable{
     }
 
 
-    public static String getWinner(){
-        return winner;
-    }
-
     @Override
     public void run() {
         while (done<nBox){
             int value = Math.min(nBox-done,capacity);
-            warehouse.addValue(value);
-            done+=capacity;
-        }
-        synchronized (lock) {
-            if (winner == null) {
-                winner = name;
+            int oneValue = value/ warehouse.length;
+            for (int i = 0; i < warehouse.length; i++) {
+                if (i==0){
+                    warehouse[0].addValue(oneValue + (value % warehouse.length));
+                } else {
+                    warehouse[i].addValue(oneValue);
+                }
             }
+
+
+            done+=capacity;
         }
         System.out.println(name + " finish. Get: " + done + " boxes");
     }

@@ -1,16 +1,15 @@
 public class Main {
-
-
     private static final int N_BOX = 1000;
-    private static final int CAPACITY = 1;
+    private static final int CAPACITY = 2;
 
     public static void main(String[] args) {
 
-        Warehouse warehouse = new Warehouse("#1");
+        Warehouse[] warehouses = {new Warehouse("#1"), new Warehouse("#2")};
+
         Thread[] loaders = {
-                new Thread(new Loader("Jack",N_BOX,CAPACITY,warehouse)),
-                new Thread(new Loader("John",N_BOX,CAPACITY,warehouse)),
-                new Thread(new Loader("Nick",N_BOX,CAPACITY,warehouse)),
+                new Thread(new Loader("Jack",N_BOX,CAPACITY,warehouses)),
+                new Thread(new Loader("John",N_BOX,CAPACITY,warehouses)),
+                new Thread(new Loader("Nick",N_BOX,CAPACITY,warehouses)),
         };
 
         for (Thread thread : loaders){
@@ -25,14 +24,8 @@ public class Main {
             }
         }
 
-
-        System.out.println(warehouse);
-        System.out.println("Winner: " + Loader.getWinner());
+        for (Warehouse warehouse:warehouses) {
+            System.out.println(warehouse);
+        }
     }
 }
-
-
-
-
-
-
