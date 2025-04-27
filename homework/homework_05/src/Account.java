@@ -8,6 +8,7 @@ public class Account {
     public Account(String iban, String owner, double balance) {
         this.iban = iban;
         this.owner = owner;
+
         this.balance = balance;
     }
 
@@ -15,10 +16,12 @@ public class Account {
         balance += amount;
     }
 
-    public void withdraw(double amount) {
+    public boolean withdraw(double amount) {
         if (getBalance() >= amount) {
             balance -= amount;
+            return  true;
         }
+        return  false;
     }
 
     public String getOwner() {
@@ -31,4 +34,5 @@ public class Account {
 
 
 }
+
 

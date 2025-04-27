@@ -36,6 +36,7 @@ public class Main {
 
             synchronized (secondLock) {
 
+
                 if (from.withdraw(amount)) {
 
                     System.out.println("account" + to + "is locked ay" + Thread.currentThread().getName());
